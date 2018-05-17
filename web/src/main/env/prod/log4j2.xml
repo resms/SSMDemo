@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off" monitorInterval="1800">
+
+    <properties>
+        <property name="LOG_HOME">${log.home}</property>
+    </properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingRandomAccessFile
+                name="errorAppender"
+                fileName="${LOG_HOME}/error.log"
+                filePattern="${LOG_HOME}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile
+                name="mainAppender"
+                fileName="${LOG_HOME}/main.log"
+                filePattern="${LOG_HOME}/$${date:yyyy-MM}/main-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.resms.ssm" level="TRACE" additivity="true">
+            <AppenderRef ref="mainAppender"/>
+        </Logger>
+        <Logger name="com.resms.ssm.auth.dao" level="DEBUG" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="mainAppender"/>
+            <AppenderRef ref="errorAppender" />
+        </Root>
+    </Loggers>
+</Configuration>

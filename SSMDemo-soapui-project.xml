@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="49af9564-863b-43b4-8a8e-a83f18c54f4f" activeEnvironment="Default" name="SSMDemo" soapui-version="5.1.2" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="59629088-b255-4dca-b4a1-8869127df1d4" wsaVersion="NONE" name="HelloWorldImplServiceSoapBinding" type="wsdl" bindingName="{http://impl.soap.ws.ssm.resms.com/}HelloWorldImplServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/ssm/services/helloworld?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/ssm/services/helloworld?wsdl"><con:part><con:url>http://localhost:8080/ssm/services/helloworld?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="HelloWorldImplService" targetNamespace="http://impl.soap.ws.ssm.resms.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://impl.soap.ws.ssm.resms.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="com.resms.webservice">
+  <wsdl:import location="http://localhost:8080/ssm/services/helloworld?wsdl=HelloWorld.wsdl" namespace="com.resms.webservice"></wsdl:import>
+  <wsdl:binding name="HelloWorldImplServiceSoapBinding" type="ns1:HelloWorld">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sayHi">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sayHi">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sayHiResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HelloWorldImplService">
+    <wsdl:port binding="tns:HelloWorldImplServiceSoapBinding" name="HelloWorldImplPort">
+      <soap:address location="http://localhost:8080/ssm/services/helloworld"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/ssm/services/helloworld?wsdl=HelloWorld.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="HelloWorld" targetNamespace="com.resms.webservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="com.resms.webservice">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="com.resms.webservice" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="com.resms.webservice">
+      <xs:element name="sayHi" type="tns:sayHi"/>
+      <xs:element name="sayHiResponse" type="tns:sayHiResponse"/>
+      <xs:complexType name="sayHi">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="who" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="sayHiResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="result" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sayHi">
+    <wsdl:part element="ns1:sayHi" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sayHiResponse">
+    <wsdl:part element="ns1:sayHiResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloWorld">
+    <wsdl:operation name="sayHi">
+      <wsdl:input message="ns1:sayHi" name="sayHi"></wsdl:input>
+      <wsdl:output message="ns1:sayHiResponse" name="sayHiResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/ssm/services/helloworld</con:endpoint></con:endpoints><con:operation id="14b9be7c-6422-4f4e-a132-32fe333d2806" isOneWay="false" action="" name="sayHi" bindingOperationName="sayHi" type="Request-Response" outputName="sayHiResponse" inputName="sayHi" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a1aa104e-ba24-4292-a519-5315f12934bf" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/ssm/services/helloworld</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="com.resms.webservice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <com:sayHi>
+         <!--Optional:-->
+         
+      <who>sam</who></com:sayHi>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://impl.soap.ws.ssm.resms.com/HelloWorld/sayHi"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:databaseConnectionContainer/><con:oAuth2ProfileContainer/><con:reporting><con:xmlTemplates/><con:parameters/></con:reporting></con:soapui-project>

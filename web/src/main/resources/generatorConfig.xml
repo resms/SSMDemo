@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<properties resource="jdbc.properties"/>
+    <!--数据库驱动-->
+    <!-- <classPathEntry location="mysql-connector-java-5.0.8-bin.jar"/> -->
+    <context id="DB2Tables"  targetRuntime="MyBatis3">
+	    <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <commentGenerator>
+        	<!-- 是否生成注释时间戳true=生成，false=不生成 -->
+            <property name="suppressDate" value="false"/>
+            <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <property name="addRemarkComments" value="false"/>
+        </commentGenerator>
+		<jdbcConnection 
+						connectionURL="${jdbc.url}"
+                        driverClass="${jdbc.driver}" 
+                        userId="${jdbc.username}" 
+                        password="${jdbc.password}" />
+        <javaTypeResolver>
+        	<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true， 把 JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径； -->
+        <javaModelGenerator 
+        	targetPackage="com.resms.ssm.bean" 
+        	targetProject="src/test/resources">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- sqlMapGenerator是mybatis 的sqlMapper XML文件的生成信息，包括生成路径等； 先生成xml，再生成java -->
+        <sqlMapGenerator 
+        	targetPackage="com.resms.ssm.dao" 
+        	targetProject="src/test/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- javaClientGenerator是应用接口的生成信息； -->
+        <javaClientGenerator 
+        	type="XMLMAPPER" 
+        	targetPackage="com.resms.ssm.dao" 
+        	targetProject="src/test/resources">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- table配置数据库中的表的信息，每张表配置一个，默认采用驼峰规则对应,如果需要个性化,请填写domainObjectName属性 -->
+        <table tableName="user_t"
+        	domainObjectName="User"
+        	mapperName="UserDao"
+        	enableCountByExample="true"
+        	enableUpdateByExample="true"
+        	enableDeleteByExample="true"
+        	enableSelectByExample="true"
+        	selectByExampleQueryId="true" />
+	</context>
+</generatorConfiguration>
