@@ -146,7 +146,7 @@
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
     	<property name="order" value="10" />
-    	<property name= "contentNegotiationManager" ref= "contentNegotiationManager"/>    
+    	<property name= "contentNegotiationManager" ref="contentNegotiationManager"/>
 	    <property name="viewResolvers">  
 	        <list>
                 <ref bean="beanNameViewResolver"/>
