@@ -306,6 +306,13 @@
                 <version>2.0.0.Final</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>2.0.0.Final</version>
+                <classifier>sources</classifier>
+                <scope>test</scope>
+            </dependency>
 
             <!--velocity starty-->
             <dependency>
@@ -531,8 +538,12 @@
             <properties>
                 <package.environment>sit</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <jdbc.driver>org.h2.Driver</jdbc.driver>
+                <jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1</jdbc.url>
+                <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
+                <jdbc.username>sa</jdbc.username>
+                <jdbc.password></jdbc.password>
             </properties>
-
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -597,6 +608,11 @@
             <properties>
                 <package.environment>uat</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <jdbc.driver>org.h2.Driver</jdbc.driver>
+                <jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1</jdbc.url>
+                <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
+                <jdbc.username>sa</jdbc.username>
+                <jdbc.password></jdbc.password>
             </properties>
 
             <repositories>
@@ -659,6 +675,11 @@
             <properties>
                 <package.environment>ver</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <jdbc.driver>org.h2.Driver</jdbc.driver>
+                <jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1</jdbc.url>
+                <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
+                <jdbc.username>sa</jdbc.username>
+                <jdbc.password></jdbc.password>
             </properties>
 
             <repositories>
@@ -721,6 +742,11 @@
             <properties>
                 <package.environment>prod</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <jdbc.driver>org.h2.Driver</jdbc.driver>
+                <jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;DB_CLOSE_DELAY=-1</jdbc.url>
+                <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
+                <jdbc.username>sa</jdbc.username>
+                <jdbc.password></jdbc.password>
             </properties>
 
             <repositories>
