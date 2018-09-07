@@ -7,6 +7,7 @@
     <settings>
         <!-- Globally enables or disables any caches configured in any mapper under this configuration -->
         <setting name="cacheEnabled" value="false"/>
+        <setting name="localCacheScope" value="SESSION"/>
         <!-- Sets the number of seconds the driver will wait for a response from the database -->
         <setting name="defaultStatementTimeout" value="3000"/>
         <!-- Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn -->
@@ -14,10 +15,35 @@
         <!-- Allows JDBC support for generated keys. A compatible driver is required.
         This setting forces generated keys to be used if set to true,
          as some drivers deny compatibility but still work -->
-        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+
+        <setting name="lazyLodingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="jdbcTypeForNull" value="NULL" />
+        <!--SLF4J|LOG4J|LOG4J2|JDK_LOGGING|COMMONS_LOGGING|STDOUT_LOGGING|NO_LOGGING-->
         <setting name="logImpl" value="LOG4J2"/>
+        <setting name="logPrefix" value="SQL-"/>
     </settings>
 
     <!-- Continue going here -->
+
+    <plugins>
+        <plugin interceptor="org.apache.mybatis.plugin.CreateUpdateTimePlugin"/>
+    </plugins>
+
+    <environments default="development">
+        <environment id="developement">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED"/>
+        </environment>
+        <environment id="production">
+            <transactionManager type="MANAGED"/>
+            <dataSource type="JNDI"/>
+        </environment>
+    </environments>
 
 </configuration>
