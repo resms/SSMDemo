@@ -3,19 +3,25 @@
 
     <properties>
         <property name="LOG_HOME">${log.home}</property>
+        <property name="LOG_FILE_SIZE">30MB</property>
     </properties>
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %m [%thread %logger{36}:%line]%n"/>
+        </Console>
+        <Console name="ConsoleError" target="SYSTEM_ERR">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %m [%thread %logger{36}:%line]%n"/>
         </Console>
 
         <RollingRandomAccessFile
                 name="errorAppender"
-                fileName="${LOG_HOME}/error.log"
-                filePattern="${LOG_HOME}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz">
+                fileName="${LOG_HOME}/${date:yyyy-MM-dd}/error.log"
+                filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/error-%d{yyyy-MM-dd}-%i.log.gz">
             <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] - %msg%n"/>
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %m [%thread %logger{36}:%line]"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
@@ -26,9 +32,10 @@
 
         <RollingRandomAccessFile
                 name="mainAppender"
-                fileName="${LOG_HOME}/main.log"
-                filePattern="${LOG_HOME}/$${date:yyyy-MM}/main-%d{yyyy-MM-dd}-%i.log.gz">
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] - %msg%n"/>
+                fileName="${LOG_HOME}/${date:yyyy-MM-dd}/main.log"
+                filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/main.%i.%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %m [%thread %logger{36}:%line]%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="10 MB"/>
@@ -36,17 +43,56 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingRandomAccessFile>
+
+        <RollingFile name="traceAppender"
+                     immediateFlush="true"
+                     fileName="${LOG_HOME}/${date:yyyy-MM-dd}/trace.log"
+                     filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/trace.%date{yyyy-MM-dd}.%i.log.gz">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %m [%thread %logger{36}:%line]%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="DEBUG" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+        <RollingRandomAccessFile
+                name="debugAppender"
+                fileName="${LOG_HOME}/${date:yyyy-MM-dd}/debug.log"
+                filePattern="${LOG_HOME}/$${date:yyyy-MM-dd}/debug.%d{yyyy-MM-dd}.%i.log.gz">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level - %m [%thread %logger{36}:%line]%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="TRACE" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingRandomAccessFile>
+
     </Appenders>
 
     <Loggers>
         <Logger name="com.resms.ssm" level="TRACE" additivity="true">
             <AppenderRef ref="mainAppender"/>
+            <AppenderRef ref="errorAppender" />
         </Logger>
         <Logger name="com.resms.ssm.auth.dao" level="DEBUG" additivity="true">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="INFO">
+        <Root level="TRACE">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="ConsoleError"/>
+            <AppenderRef ref="traceAppender"/>
+            <AppenderRef ref="debugAppender"/>
             <AppenderRef ref="mainAppender"/>
             <AppenderRef ref="errorAppender" />
         </Root>

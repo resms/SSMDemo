@@ -14,9 +14,9 @@
     <!--<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>-->
 
     <!-- soa webservice begin -->
-    <jaxws:endpoint id="helloWorld"
-                    implementor="com.resms.ssm.ws.soap.impl.HelloWorldImpl"
-                    address="/helloworld"/>
+    <jaxws:endpoint id="hello"
+                    implementor="com.resms.ssm.ws.soap.impl.HelloServiceImpl"
+                    address="/hello"/>
     <!-- soa webservice end -->
 
     <!-- restful webservice begin -->

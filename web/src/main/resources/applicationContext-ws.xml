@@ -8,5 +8,5 @@
     <bean id="echoRestService" class="com.resms.ssm.ws.rest.impl.EchoRestServiceImpl"/>
     
     <!--soap webservice bean-->  
-    <bean id="helloWorld" class="com.resms.ssm.ws.soap.impl.HelloWorldImpl"/>
+    <bean id="hello" class="com.resms.ssm.ws.soap.impl.HelloServiceImpl"/>
 </beans>

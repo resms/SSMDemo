@@ -1,14 +1,12 @@
 package com.resms.ssm.ws.soap.impl;
 
 
-import com.resms.ssm.ws.soap.HelloWorld;
-
-import javax.jws.WebService;
+import com.resms.ssm.ws.soap.HelloService;
 
 /**
  * soap webservice
  */
-public class HelloWorldImpl implements HelloWorld {
+public class HelloServiceImpl implements HelloService {
     public String sayHi(String text) {
         System.out.println("sayHi called");
         return "Hello " + text;

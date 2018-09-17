@@ -8,7 +8,7 @@ import javax.jws.WebService;
  * soap webservice
  */
 @WebService(targetNamespace = "com.resms.webservice")
-public interface HelloWorld {
+public interface HelloService {
     @WebResult(name = "result")
     String sayHi(@WebParam(name = "who") String text);
 }

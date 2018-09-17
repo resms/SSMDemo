@@ -191,17 +191,14 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 		</dependency>
-		<!--orm end-->
-
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<scope>test</scope>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
 		</dependency>
+		<!--orm end-->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<classifier>sources</classifier>
 			<scope>test</scope>
 		</dependency>
 
@@ -222,43 +219,15 @@
 			<artifactId>freemarker</artifactId>
 		</dependency>
 		<!--freemarker end-->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+		</dependency>
+		<!--test start-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<!--test end-->
 	</dependencies>
-	<build>
-		<plugins>
-			<!--<plugin>-->
-				<!--<groupId>org.mortbay.jetty</groupId>-->
-				<!--<artifactId>jetty-maven-plugin</artifactId>-->
-				<!--<version>8.1.14.v20131031</version>-->
-				<!--<configuration>-->
-					<!--<webAppConfig>-->
-						<!--<contextPath>/ext</contextPath>-->
-					<!--</webAppConfig>-->
-					<!--<reload>automatic</reload>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.9.v20180320</version>
-				<configuration>
-					<stopKey>exit</stopKey>
-					<stopPort>9999</stopPort>
-					<scanIntervalSeconds>20</scanIntervalSeconds>
-					<httpConnector>
-						<port>80</port>
-					</httpConnector>
-					<webApp>
-						<contextPath>/</contextPath>
-					</webApp>
-					<requestLog implementation="org.eclipse.jetty.server.NCSARequestLog">
-						<filename>target/access.log</filename>
-						<retainDays>90</retainDays>
-						<append>false</append>
-						<extended>false</extended>
-						<logTimeZone>GMT+8:00</logTimeZone>
-					</requestLog>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

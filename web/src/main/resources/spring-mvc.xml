@@ -216,4 +216,15 @@
         <!-- 内存中的最大值 -->  
         <property name="maxInMemorySize" value="40960" />    
     </bean>
+
+    <bean id="mdcInterceptorAdapter" class="com.resms.ssm.mdc.MDCHandlerInterceptorAdapter"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/log/info" />
+            <mvc:mapping path="/**/*.jsp" />
+            <ref bean="mdcInterceptorAdapter"/>
+        </mvc:interceptor>
+
+    </mvc:interceptors>
 </beans>

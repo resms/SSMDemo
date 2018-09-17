@@ -24,6 +24,6 @@ public class VelocityDemoController {
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public String info() throws IOException {
 		//TODO some business logic
-		return "info";
+		return "velocity";
 	}
 }
