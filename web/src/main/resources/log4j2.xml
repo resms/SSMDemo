@@ -21,10 +21,11 @@
         <RollingFile
                 name="errorAppender"
                 fileName="${LOG_HOME}/${date:yyyyMMdd}/error.log"
-                filePattern="${LOG_HOME}/$${date:yyyyMMdd}/error.%i.log">
+                filePattern="${LOG_HOME}/$${date:yyyyMMdd}/error%d{yyyyMMdd}.%i.log">
             <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
             <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}"/>
                 <OnStartupTriggeringPolicy/>
             </Policies>
@@ -34,10 +35,11 @@
         <RollingFile
                 name="mainAppender"
                 fileName="${LOG_HOME}/${date:yyyyMMdd}/main.log"
-                filePattern="${LOG_HOME}/$${date:yyyyMMdd}/main.%i.log">
+                filePattern="${LOG_HOME}/$${date:yyyyMMdd}/main%d{yyyyMMdd}.%i.log">
             <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
             <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}"/>
                 <OnStartupTriggeringPolicy/>
             </Policies>
@@ -47,10 +49,10 @@
         <RollingFile name="traceAppender"
                      immediateFlush="true"
                      fileName="${LOG_HOME}/${date:yyyyMMdd}/trace.log"
-                     filePattern="${LOG_HOME}/$${date:yyyyMMdd}/trace.%i.%d{yyyyMMddHH}.log.gz">
+                     filePattern="${LOG_HOME}/$${date:yyyyMMdd}/trace%d{yyyyMMdd}.%i.log">
             <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
             <Policies>
-                <TimeBasedTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}"/>
                 <OnStartupTriggeringPolicy/>
             </Policies>
@@ -64,9 +66,10 @@
         <RollingFile
                 name="debugAppender"
                 fileName="${LOG_HOME}/${date:yyyyMMdd}/debug.log"
-                filePattern="${LOG_HOME}/$${date:yyyyMMdd}/debug.%i.log">
+                filePattern="${LOG_HOME}/$${date:yyyyMMdd}/debug%d{yyyyMMdd}.%i.log">
             <PatternLayout pattern="${LOG_PATTERN_LAYOUT}"/>
             <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="${LOG_FILE_SIZE}"/>
                 <OnStartupTriggeringPolicy/>
             </Policies>
@@ -85,6 +88,10 @@
 
         <AsyncLogger name="com.resms.ssm" level="DEBUG" />
         <AsyncLogger name="com.resms.ssm.auth.dao" level="DEBUG" />
+
+        <Logger name="SQLLog" level="DEBUG" additivity="false">
+            <AppenderRef ref="mainAppender"/>
+        </Logger>
 
         <Root level="TRACE" includeLocation="true">
             <AppenderRef ref="Console" />
