@@ -28,27 +28,29 @@ public class Log4jDemoController {
 
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String info(HttpServletRequest request, Model model) {
-        logger.trace("the trace level log!");
-        logger.debug("the debug level log!");
-        logger.info("=======================info");
-        logger.info("hi {}, lets play {}","sam","wow");
-        logger.warn("the warn level log!");
-        logger.error("the error level log!");
-        logger.fatal("the fatal level log!");
+        for(int i = 0; i  < 100; i++) {
+            logger.trace("the trace level log!");
 
-        LOG.debug("Logging in user %s with birthday %s", "sam", "1984");
-        LOG.debug("Logging in user %1$s with birthday %2$tm %2$te,%2$tY", "sam", new Date());
-        LOG.debug("Integer.MAX_VALUE = %,d", Integer.MAX_VALUE);
-        LOG.debug("Long.MAX_VALUE = %,d", Long.MAX_VALUE);
+            logger.debug("the debug level log!");
+            logger.info("=======================info");
+            logger.info("hi {}, lets play {}", "sam", "wow");
+            logger.warn("the warn level log!");
+            logger.error("the error level log!");
+            logger.fatal("the fatal level log!");
 
-        logger.info(marker,"the log with marker");
-        LOG.info(marker,"the log with marker by %s","sam");
+            LOG.debug("Logging in user %s with birthday %s", "sam", "1984");
+            LOG.debug("Logging in user %1$s with birthday %2$tm %2$te,%2$tY", "sam", new Date());
+            LOG.debug("Integer.MAX_VALUE = %,d", Integer.MAX_VALUE);
+            LOG.debug("Long.MAX_VALUE = %,d", Long.MAX_VALUE);
 
-        slflogger.info("slf4j log bind log4j2 log");
-        slflogger.info("{} log bidn {} log","slf4j","log4j2");
+            logger.info(marker, "the log with marker");
+            LOG.info(marker, "the log with marker by %s", "sam");
 
-        logService.loadMessages();
+            slflogger.info("slf4j log bind log4j2 log");
+            slflogger.info("{} log bidn {} log", "slf4j", "log4j2");
 
+            logService.loadMessages();
+        }
         return "info";
     }
 
