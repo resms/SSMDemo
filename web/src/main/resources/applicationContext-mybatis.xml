@@ -27,8 +27,8 @@
   	
   	<!-- 初始化数据表结构 -->
     <!-- <jdbc:initialize-database data-source="dataSource"  ignore-failures="ALL">
-        <jdbc:script location="classpath:db/h2/schema.sql" />
-        <jdbc:script location="classpath:database/h2/data.sql" />
+        <jdbc:script location="classpath:db/h2/schema_h2.sql" />
+        <jdbc:script location="classpath:database/h2/data_h2.sql" />
     </jdbc:initialize-database> -->
       
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
