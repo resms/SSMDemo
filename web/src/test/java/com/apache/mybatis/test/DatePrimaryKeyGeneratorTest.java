@@ -4,7 +4,7 @@ import org.apache.mybatis.gen.impl.DateTimePrimaryKeyGeneratorImpl;
 import org.junit.Test;
 
 public class DatePrimaryKeyGeneratorTest {
-    @Test
+    //@Test
     public void testNextId()
     {
         DateTimePrimaryKeyGeneratorImpl gen = new DateTimePrimaryKeyGeneratorImpl();
