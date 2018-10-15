@@ -1,1 +1,1 @@
-insert  into `user_t`(`id`,`user_name`,`password`,`age`) values (1,'测试','123456',30);
+insert  into `t_user`(`id`,`user_name`,`password`,`age`) values (1,'测试','123456',30);
