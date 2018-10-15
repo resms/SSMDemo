@@ -1,14 +1,12 @@
 package com.resms.ssm.auth.service.impl;
 
-import com.resms.ssm.auth.dto.SimpleMessage;
+import com.resms.ssm.auth.bean.User;
+import com.resms.ssm.auth.dao.UserDao;
+import com.resms.ssm.auth.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.resms.ssm.auth.bean.User;
-import com.resms.ssm.auth.dao.UserDao;
-import com.resms.ssm.auth.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,7 +16,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
 	private UserDao userDao;
 	
-	public User getUserById(int id) {
+	public User getUserById(long id) {
 		
 		return userDao.selectByPrimaryKey(id);
 	}
