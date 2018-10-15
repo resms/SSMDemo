@@ -9,6 +9,8 @@
 
     <modules>
         <module>web</module>
+        <module>generator</module>
+        <module>refreshdb</module>
     </modules>
 
     <properties>
@@ -21,6 +23,7 @@
         <spring.version>4.3.16.RELEASE</spring.version>
         <persistence-api.version>1.0.2</persistence-api.version>
         <mybatis.version>3.4.6</mybatis.version>
+        <mybatis-getnerator.version>1.3.7</mybatis-getnerator.version>
         <slf4j.version>1.7.25</slf4j.version>
         <log4j2.version>2.10.0</log4j2.version>
         <hikariCP.version>2.6.3</hikariCP.version>
@@ -319,7 +322,7 @@
             <dependency>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-core</artifactId>
-                <version>1.3.7</version>
+                <version>${mybatis-getnerator.version}</version>
             </dependency>
             <!--orm end-->
 
@@ -404,40 +407,44 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.mybatis.generator</groupId>
-                    <artifactId>mybatis-generator-maven-plugin</artifactId>
-                    <version>1.3.5</version>
-                    <configuration>
-                        <verbose>false</verbose>
-                        <overwrite>true</overwrite>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>Generate Mybatis Artifacts</id>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.h2database</groupId>
-                            <artifactId>h2</artifactId>
-                            <version>1.4.196</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.5</version>
+                    <version>3.7.0</version>
                     <configuration>
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.20.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -460,6 +467,33 @@
                         </arguments>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>${mybatis-getnerator.version}</version>
+                    <configuration>
+                        <!--<configurationFile>src/main/resource/generatorConfig.xml</configurationFile>-->
+                        <verbose>true</verbose>
+                        <overwrite>true</overwrite>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>Generate Mybatis Artifacts</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.h2database</groupId>
+                            <artifactId>h2</artifactId>
+                            <version>1.4.196</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
                 <!--<plugin>-->
                 <!--<groupId>org.mortbay.jetty</groupId>-->
                 <!--<artifactId>jetty-maven-plugin</artifactId>-->
@@ -498,13 +532,25 @@
         </pluginManagement>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5</version>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
         </plugins>
         <resources>
@@ -513,6 +559,7 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.properties</include>
                 </includes>
             </resource>
             <resource>
@@ -521,10 +568,6 @@
                     <include>**/*.xml</include>
                     <include>**/*.properties</include>
                 </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
             </resource>
         </resources>
     </build>
@@ -537,14 +580,13 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
                         <configuration>
                             <target>
                                 <property file="src/main/resources/jdbc.properties"/>
                                 <sql driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}" onerror="continue" encoding="${project.build.sourceEncoding}">
                                     <classpath refid="maven.test.classpath"/>
-                                    <transaction src="src/main/resource/sql/h2/schema.sql"/>
-                                    <transaction src="src/main/resource/sql/h2/import-data.sql"/>
+                                    <transaction src="src/main/resource/db/h2/schema_h2.sql"/>
+                                    <transaction src="src/main/resource/db/h2/data_h2.sql"/>
                                 </sql>
                             </target>
                         </configuration>
@@ -559,7 +601,7 @@
                 <package.environment>sit</package.environment>
                 <log.home>logs/${package.environment}</log.home>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
-                <jdbc.url>jdbc:h2:~/ssmdb-sit;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
+                <jdbc.url>jdbc:h2:~/testdb/sit;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
                 <jdbc.username>sa</jdbc.username>
                 <jdbc.password></jdbc.password>
@@ -629,7 +671,7 @@
                 <package.environment>uat</package.environment>
                 <log.home>logs/${package.environment}</log.home>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
-                <jdbc.url>jdbc:h2:~/ssmdb-uat;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
+                <jdbc.url>jdbc:h2:~/testdb/uat;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
                 <jdbc.username>sa</jdbc.username>
                 <jdbc.password></jdbc.password>
@@ -696,7 +738,7 @@
                 <package.environment>ver</package.environment>
                 <log.home>logs/${package.environment}</log.home>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
-                <jdbc.url>jdbc:h2:~/ssmdb-ver;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
+                <jdbc.url>jdbc:h2:~/testdb/ver;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
                 <jdbc.username>sa</jdbc.username>
                 <jdbc.password></jdbc.password>
@@ -763,7 +805,7 @@
                 <package.environment>prod</package.environment>
                 <log.home>logs/${package.environment}</log.home>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
-                <jdbc.url>jdbc:h2:~/ssmdb-prod;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
+                <jdbc.url>jdbc:h2:~/testdb/prod;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
                 <jdbc.username>sa</jdbc.username>
                 <jdbc.password></jdbc.password>
