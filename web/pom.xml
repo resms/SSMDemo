@@ -5,6 +5,7 @@
 		<groupId>com.resms</groupId>
 		<artifactId>SSMDemo-parent</artifactId>
 		<version>1.0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>ssm</artifactId>
