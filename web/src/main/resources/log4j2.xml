@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="off" monitorInterval="1800">
+<Configuration status="OFF" monitorInterval="120">
 
-    <properties>
+    <Properties>
         <property name="LOG_HOME">${log.home}</property>
-        <property name="LOG_FILE_SIZE">10 KB</property>
+        <property name="LOG_FILE_SIZE">10MB</property>
         <property name="HIS_COUNT">${log.maxhis:-1000}</property>
         <property name="LOG_PATTERN_LAYOUT">%d{yyyyMMdd.HHmmss.SSS} %-5level - %X{traceToken} %m [%thread %logger{36}:%line]%n</property>
-    </properties>
+    </Properties>
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
