@@ -20,6 +20,7 @@ public class DemoRestController {
 		ObjectNode node = mapper.createObjectNode();
 		node.put("opCode", "1");
 		node.put("text", "get data by id=" + id);
+		node.put("dts",System.currentTimeMillis());
 		return node;
 	}
 
