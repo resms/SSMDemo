@@ -600,6 +600,7 @@
             <properties>
                 <package.environment>sit</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <log.maxhis>99</log.maxhis>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
                 <jdbc.url>jdbc:h2:~/testdb/sit;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
@@ -670,6 +671,7 @@
             <properties>
                 <package.environment>uat</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <log.maxhis>99</log.maxhis>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
                 <jdbc.url>jdbc:h2:~/testdb/uat;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
@@ -737,6 +739,7 @@
             <properties>
                 <package.environment>ver</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <log.maxhis>99</log.maxhis>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
                 <jdbc.url>jdbc:h2:~/testdb/ver;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
@@ -804,6 +807,7 @@
             <properties>
                 <package.environment>prod</package.environment>
                 <log.home>logs/${package.environment}</log.home>
+                <log.maxhis>99</log.maxhis>
                 <jdbc.driver>org.h2.Driver</jdbc.driver>
                 <jdbc.url>jdbc:h2:~/testdb/prod;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;MODE=MYSQL;INIT=CREATE SCHEMA IF NOT EXISTS TEST</jdbc.url>
                 <!--<jdbc.url>jdbc:h2:~/testdb;MODE=MYSQL;AUTOSERVER=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>-->
