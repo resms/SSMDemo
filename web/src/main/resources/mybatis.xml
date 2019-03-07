@@ -32,7 +32,7 @@
     <!-- Continue going here -->
 
     <plugins>
-        <plugin interceptor="org.apache.mybatis.plugin.CreateUpdateTimePlugin"/>
+        <plugin interceptor="com.resms.plugin.mybatis.CreateUpdateTimePlugin"/>
     </plugins>
 
     <environments default="development">

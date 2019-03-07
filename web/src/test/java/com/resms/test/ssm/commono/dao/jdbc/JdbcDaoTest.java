@@ -1,6 +1,6 @@
 package com.resms.test.ssm.commono.dao.jdbc;
 
-import com.resms.ssm.auth.bean.User;
+import com.resms.ssm.gen.mybatis.bean.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

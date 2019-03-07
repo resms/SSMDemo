@@ -1,6 +1,5 @@
 package com.resms.ssm.mdc;
 
-import com.resms.ssm.mdc.MDCConstant;
 import org.slf4j.MDC;
 
 import javax.servlet.*;

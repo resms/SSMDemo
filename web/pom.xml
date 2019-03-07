@@ -11,6 +11,7 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+
 		<!--commons start-->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -230,4 +231,39 @@
 		</dependency>
 		<!--test end-->
 	</dependencies>
+	<build>
+		<!--<outputDirectory>${project.basedir}/src/main/webapp/WEB-INF/</outputDirectory>-->
+		<plugins>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<configuration>
+					<configurationFile>src/test/resources/generatorConfig.xml</configurationFile>
+					<verbose>true</verbose>
+					<overwrite>true</overwrite>
+				</configuration>
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>Generate Mybatis Artifacts</id>-->
+						<!--<phase>test</phase>-->
+						<!--<goals>-->
+							<!--<goal>generate</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+				<dependencies>
+					<dependency>
+						<groupId>com.resms</groupId>
+						<artifactId>resms-generator</artifactId>
+						<version>${project.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>${h2.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 </project>

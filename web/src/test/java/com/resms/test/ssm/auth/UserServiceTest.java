@@ -1,10 +1,10 @@
 package com.resms.test.ssm.auth;
 
 import com.resms.ssm.auth.AuthRuntimeException;
-import com.resms.ssm.auth.bean.User;
-import com.resms.ssm.auth.dao.UserDao;
 import com.resms.ssm.auth.service.UserService;
 import com.resms.ssm.auth.service.impl.UserServiceImpl;
+import com.resms.ssm.gen.mybatis.bean.User;
+import com.resms.ssm.gen.mybatis.mapper.UserMapper;
 import org.easymock.EasyMock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({UserDao.class})
+@PrepareForTest({UserMapper.class})
 @PowerMockIgnore("javax.management.*")
 public class UserServiceTest {
     @Test
@@ -26,7 +26,7 @@ public class UserServiceTest {
         expectUser.setAge(35);
         expectUser.setUserName("sam");
 
-        UserDao mock = PowerMock.createMock(UserDao.class);
+        UserMapper mock = PowerMock.createMock(UserMapper.class);
 //        EasyMock.expect(mock.selectByPrimaryKey(1001L))//精确匹配
         EasyMock.expect(mock.selectByPrimaryKey(EasyMock.isA(Long.class)))//只要类型匹配就命中
 //                .andThrow(new AuthRuntimeException("test throw exception!"))
@@ -35,7 +35,7 @@ public class UserServiceTest {
         PowerMock.replay(mock);
 
         UserService service = new UserServiceImpl();
-        ((UserServiceImpl) service).setUserDao(mock);
+        ((UserServiceImpl) service).setUserMapper(mock);
         try {
             User user = service.getUserById(1001L);
             assertEquals(expectUser, user);

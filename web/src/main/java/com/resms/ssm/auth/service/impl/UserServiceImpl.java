@@ -1,12 +1,15 @@
 package com.resms.ssm.auth.service.impl;
 
-import com.resms.ssm.auth.bean.User;
-import com.resms.ssm.auth.dao.UserDao;
 import com.resms.ssm.auth.service.UserService;
+import com.resms.ssm.gen.mybatis.bean.User;
+import com.resms.ssm.gen.mybatis.bean.UserExample;
+import com.resms.ssm.gen.mybatis.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -14,19 +17,27 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-	private UserDao userDao;
+	private UserMapper userMapper;
 	
 	public User getUserById(long id) {
 		
-		return userDao.selectByPrimaryKey(id);
+		return userMapper.selectByPrimaryKey(id);
 	}
 
-	public UserDao getUserDao() {
-		return userDao;
+	@Override
+	public List<User> getUsers(List<Long> ids) {
+		UserExample example = new UserExample();
+		UserExample.Criteria c = example.createCriteria();
+		c.andIdIn(ids);
+		return userMapper.selectByExample(example);
 	}
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public UserMapper getUserMapper() {
+		return userMapper;
+	}
+
+	public void setUserMapper(UserMapper userMapper) {
+		this.userMapper = userMapper;
 	}
 
 }
