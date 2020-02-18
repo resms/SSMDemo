@@ -14,7 +14,7 @@ public class IDJavalFormatter implements JavaFormatter  {
 
     @Override
     public String getFormattedContent(CompilationUnit compilationUnit) {
-        String code = compilationUnit.getFormattedContent();
+        String code = compilationUnit.getType().getShortName();
         return code.replaceAll("PrimaryKey","Id");
     }
 }

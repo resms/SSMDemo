@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.resms</groupId>
+        <artifactId>environment</artifactId>
+        <version>1.0.0.1-SNAPSHOT</version>
+        <relativePath>../environment</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>refreshdb</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <configuration>
+                    <target>
+                        <property name="compile_classpath" refid="maven.compile.classpath"/>
+                        <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                        <property name="test_classpath" refid="maven.test.classpath"/>
+                        <property name="plugin_classpath" refid="maven.plugin.classpath"/>
+
+                        <echo message="compile classpath: ${compile_classpath}"/>
+                        <echo message="runtime classpath: ${runtime_classpath}"/>
+                        <echo message="test classpath:    ${test_classpath}"/>
+                        <echo message="plugin classpath:  ${plugin_classpath}"/>
+
+                        <!--h2-->
+                        <property name="dbunit.datatype" value="org.dbunit.ext.h2.H2DataTypeFactory" />
+                        <!--mysql
+                        <property name="dbunit.datatype" value="org.dbunit.ext.mysql.MySqlDataTypeFactory" />
+                        -->
+                        <!--mssql
+                        <property name="dbunit.datatype" value="org.dbunit.ext.mssql.MsSqlDataTypeFactory" />
+                        -->
+                        <!--oracle
+                        <property name="dbunit.datatype" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" />
+                        -->
+                        <property file="src/main/resources/jdbc.properties"/>
+                        <sql driver="${jdbc.driver}"
+                             url="${jdbc.url}"
+                             userid="${jdbc.username}"
+                             password="${jdbc.password}"
+                             onerror="continue"
+                             encoding="${project.build.sourceEncoding}">
+
+                            <classpath refid="maven.test.classpath"/>
+                            <!--<transaction src="db/**/*_${jdbc.type}.sql"/>-->
+                            <transaction src="db/schema_${db.type}.sql"/>
+                            <transaction src="db/${package.environment}/data_h2.sql"/>
+                        </sql>
+                        <taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />
+
+                        <!-- mysql、mssql -->
+                        <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}">
+
+                            <!-- oracle
+                            <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
+                                password="${jdbc.password}" schema="${jdbc.username}" > -->
+
+                            <dbconfig>
+                                <property name="datatypeFactory" value="${dbunit.datatype}" />
+                            </dbconfig>
+                            <classpath refid="maven.test.classpath" />
+
+                            <!--<operation type="INSERT" src="db/**/*.xls" format="xls" transaction="true"/>-->
+                            <operation type="INSERT" src="db/${package.environment}/data.xls" format="xls" transaction="true"/>
+                        </dbunit>
+                    </target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo message="compile..."/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo message="clean..."/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

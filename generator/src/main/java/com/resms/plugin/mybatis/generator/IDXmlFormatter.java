@@ -14,7 +14,7 @@ public class IDXmlFormatter implements XmlFormatter {
 
     @Override
     public String getFormattedContent(Document document) {
-        String code = document.getFormattedContent();
+        String code = document.getRootElement().getName();
         return code.replaceAll("PrimaryKey","Id");
     }
 }
