@@ -11,6 +11,8 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(PowerMockRunner.class)
@@ -28,12 +30,12 @@ public class UserMapperDynamicSqlMockTest {
 //        EasyMock.expect(mock.selectByPrimaryKey(1001L))//精确匹配
         EasyMock.expect(mock.selectByPrimaryKey(EasyMock.isA(Long.class)))//只要类型匹配就命中
 //                .andThrow(new AuthRuntimeException("test throw exception!"))
-                .andReturn(expectUser);
+                .andReturn(Optional.of(expectUser));
 
         PowerMock.replay(mock);
 
         try {
-            User user = mock.selectByPrimaryKey(100L);
+            Optional<User> user = mock.selectByPrimaryKey(100L);
             assertEquals(expectUser, user);
         }
         catch (AuthRuntimeException ex)

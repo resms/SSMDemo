@@ -21,7 +21,7 @@
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
-            <version>2.5.4</version>
+            <version>2.6.0</version>
         </dependency>
 
         <dependency>
@@ -71,7 +71,8 @@
                         <!--oracle
                         <property name="dbunit.datatype" value="org.dbunit.ext.oracle.Oracle10DataTypeFactory" />
                         -->
-                        <property file="src/main/resources/jdbc.properties"/>
+                        <!--<property file="src/main/resources/jdbc.properties"/>-->
+                        <property file="src/test/resources/jdbc.properties"/>
                         <sql driver="${jdbc.driver}"
                              url="${jdbc.url}"
                              userid="${jdbc.username}"
@@ -87,7 +88,10 @@
                         <taskdef name="dbunit" classname="org.dbunit.ant.DbUnitTask" classpathref="maven.test.classpath" />
 
                         <!-- mysql、mssql -->
-                        <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}" password="${jdbc.password}">
+                        <dbunit driver="${jdbc.driver}"
+                                url="${jdbc.url}"
+                                userid="${jdbc.username}"
+                                password="${jdbc.password}">
 
                             <!-- oracle
                             <dbunit driver="${jdbc.driver}" url="${jdbc.url}" userid="${jdbc.username}"
