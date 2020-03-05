@@ -29,7 +29,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <log4j2.version>2.10.0</log4j2.version>
         <hikariCP.version>2.6.3</hikariCP.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
         <xstream.version>1.4.11</xstream.version>
         <cxf.version>3.3.0</cxf.version>
         <jstl.version>1.2</jstl.version>
