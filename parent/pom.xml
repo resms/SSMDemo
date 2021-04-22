@@ -21,7 +21,7 @@
         <junit.version>4.12</junit.version>
         <spring.version>4.3.26.RELEASE</spring.version>
         <persistence-api.version>1.0.2</persistence-api.version>
-        <mybatis.version>3.5.4</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <mybatisSpring.version>2.0.4</mybatisSpring.version>
         <mybatis-getnerator.version>1.4.0</mybatis-getnerator.version>
         <mybatis-dynamicSql>1.1.4</mybatis-dynamicSql>
